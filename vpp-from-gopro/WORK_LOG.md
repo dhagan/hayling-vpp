@@ -19,11 +19,16 @@ telemetry and record how that data may (and may not) help build 505 VPP polars.
 - The older `GX020896.MP4` reports a large file size but returned no bytes when
   read, so it has not yet been parsed.
 
-## In progress
+## Completed extraction
 
-Validate the parser against the two readable clips, export the extracted
-telemetry under this folder's `data\` directory, and record the actual counts,
-time spans, and GPS summaries here.
+- `GX010922.MP4`: 7,106 GPS5 fixes; 7,046 have GPS fix status 3, with 60 no-fix
+  samples excluded from the GPX route. Estimated valid interval:
+  2024-12-14 17:37:49.429–17:49:33.999 UTC.
+- `GX030922.MP4`: 7,097 GPS5 fixes, all with fix status 3. Estimated interval:
+  2024-12-14 18:01:24.799–18:13:14.399 UTC.
+- Per-file `_gps.csv`, `_gps.gpx`, and `_summary.json` outputs are in `data\`.
+- Parser tests pass. Sub-second times are reconstructed from GPSU packet
+  timestamps and should be treated as estimates.
 
 ## VPP limitation
 

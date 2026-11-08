@@ -3,6 +3,7 @@ import unittest
 from datetime import datetime, timezone
 
 from gopro_gps import (
+    GpsBlock,
     GpmfRecord,
     _decode_gps_stream,
     _parse_gpmf_records,
@@ -53,26 +54,13 @@ class GoproGpsTests(unittest.TestCase):
     def test_expands_sample_times_between_gpsu_blocks(self):
         start = datetime(2024, 1, 1, tzinfo=timezone.utc)
         blocks = [
-            type(
-                "Block",
-                (),
-                {
-                    "gpsu_utc": start,
-                    "gps_points": ((1, 2, 3, 4, 5), (1, 2, 3, 4, 5)),
-                    "fix": 3,
-                    "precision_raw": 100,
-                },
-            )(),
-            type(
-                "Block",
-                (),
-                {
-                    "gpsu_utc": start.replace(second=1),
-                    "gps_points": ((1, 2, 3, 4, 5), (1, 2, 3, 4, 5)),
-                    "fix": 3,
-                    "precision_raw": 100,
-                },
-            )(),
+            GpsBlock(start, ((1, 2, 3, 4, 5), (1, 2, 3, 4, 5)), 3, 100),
+            GpsBlock(
+                start.replace(second=1),
+                ((1, 2, 3, 4, 5), (1, 2, 3, 4, 5)),
+                3,
+                100,
+            ),
         ]
 
         points = expand_gps_blocks(blocks)
@@ -81,6 +69,26 @@ class GoproGpsTests(unittest.TestCase):
         self.assertEqual((points[0].timestamp_utc - start).total_seconds(), 0)
         self.assertEqual((points[1].timestamp_utc - start).total_seconds(), 0.5)
         self.assertEqual((points[2].timestamp_utc - start).total_seconds(), 1)
+
+    def test_no_fix_block_does_not_create_false_dated_points(self):
+        invalid_time = datetime(2015, 10, 18, tzinfo=timezone.utc)
+        valid_time = datetime(2024, 12, 14, tzinfo=timezone.utc)
+        blocks = [
+            GpsBlock(invalid_time, ((0, 0, 0, 0, 0),), 0, 9999),
+            GpsBlock(valid_time, ((20, -156, 10, 3, 3),), 3, 106),
+            GpsBlock(
+                valid_time.replace(second=1),
+                ((20, -156, 10, 3, 3),),
+                3,
+                106,
+            ),
+        ]
+
+        points = expand_gps_blocks(blocks)
+
+        self.assertIsNone(points[0].timestamp_utc)
+        self.assertEqual(points[1].timestamp_utc, valid_time)
+        self.assertEqual(points[2].timestamp_utc, valid_time.replace(second=1))
 
     def test_rejects_malformed_gpmf_record(self):
         with self.assertRaisesRegex(ValueError, "exceeds"):

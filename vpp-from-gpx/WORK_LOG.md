@@ -28,7 +28,8 @@ and independent validation.
 
 ## Next step
 
-Use the GoPro GPS work in the sibling `vpp-from-gopro` directory to see whether
-its embedded position/speed telemetry can provide additional track data. That
-telemetry still needs wind, heading, current, and boat/configuration context
-before it can support accurate polars.
+The sibling `vpp-from-gopro` work has extracted 14,203 GPS5 fixes from two
+readable HERO10 clips. Those tracks add position and GPS speed-over-ground
+observations, but still lack synchronized wind, heading, current, and verified
+boat/configuration context. They therefore do not change the conclusion:
+neither this GPX nor the GoPro GPS alone can support accurate true-wind polars.

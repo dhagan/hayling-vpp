@@ -25,8 +25,10 @@ For each MP4, the script writes:
 Sub-sample timestamps are estimated by spacing the GPS5 fixes evenly between
 successive GPSU timestamps. The raw per-block GPSU timestamp is retained in the
 CSV; verify this alignment against a trusted logger before sub-second timing
-is used for performance calculations. GPS speed is over ground, not through
-water. This extraction does not derive wind, heading, or current.
+is used for performance calculations. Rows with no GPS fix remain in the CSV
+but have no estimated timestamp and are excluded from the GPX route. GPS speed
+is over ground, not through water. This extraction does not derive wind,
+heading, or current.
 
 ## Implementation scope
 

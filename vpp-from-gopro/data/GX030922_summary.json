@@ -1,0 +1,44 @@
+{
+  "source_file": "G:\\My Drive\\gopro\\2024\\GX030922.MP4",
+  "source_size_bytes": 4001103655,
+  "camera": "HERO10 Black",
+  "gpmf_samples": 709,
+  "gps_blocks": 709,
+  "gps_points": 7097,
+  "gps_points_with_fix": 7097,
+  "gps_points_without_fix": 0,
+  "start_utc_estimated": "2024-12-14T18:01:24.799000Z",
+  "end_utc_estimated": "2024-12-14T18:13:14.399000Z",
+  "gps_fix_counts": {
+    "3": 7097
+  },
+  "gps_precision_raw_range": [
+    106,
+    131
+  ],
+  "latitude_range": [
+    20.9224401,
+    20.9411176
+  ],
+  "longitude_range": [
+    -156.4367739,
+    -156.4311097
+  ],
+  "gps_speed_2d": {
+    "median_m_s": 3.454,
+    "p90_m_s": 4.018400000000001,
+    "max_m_s": 4.929
+  },
+  "gps_speed_3d": {
+    "median_m_s": 3.46,
+    "p90_m_s": 4.03,
+    "max_m_s": 4.94
+  },
+  "timing_note": "Sub-sample timestamps for blocks with a GPS fix are estimated by spacing GPS5 fixes between successive GPSU timestamps. Rows without a GPS fix have no estimated timestamp.",
+  "vpp_note": "GPS speed is ground-relative, not boat speed through water. No wind, heading, or current is present in these outputs.",
+  "outputs": {
+    "csv": "data\\GX030922_gps.csv",
+    "gpx": "data\\GX030922_gps.gpx",
+    "summary_json": "data\\GX030922_summary.json"
+  }
+}

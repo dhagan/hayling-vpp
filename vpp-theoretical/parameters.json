@@ -1,0 +1,61 @@
+{
+  "class": "International 505",
+  "source_note": "Values are from the International 505 Association hosted 505 Measurement Rules PDF. Its PDF metadata identifies a 2014 rules document; confirm the latest amendments before final use.",
+  "source_url": "https://int505.org/wp-content/uploads/2019/02/505MeasurementRules.pdf",
+  "parameters": {
+    "overall_length_m": {
+      "value": 5.05,
+      "kind": "class definition / measurement",
+      "rule": "1.1; hull measurement form"
+    },
+    "minimum_dry_sailing_weight_kg": {
+      "value": 127.4,
+      "kind": "minimum rule limit",
+      "condition": "Dry, without sails and battens; not all-up sailing displacement",
+      "rule": "5.8.2"
+    },
+    "hull_template_station_positions_m_forward_of_station_11": {
+      "station_3": 3.81,
+      "station_6": 2.438,
+      "station_9": 1.066,
+      "kind": "measurement datums"
+    },
+    "hull_template_widths_m": {
+      "station_3": 1.35,
+      "station_6": 1.88,
+      "station_9": 1.79,
+      "kind": "class template values; not a full hull offsets table"
+    },
+    "maximum_centerboard_protrusion_m": {
+      "value": 1.45,
+      "kind": "rule limit",
+      "rule": "6.2"
+    },
+    "maximum_mast_top_height_m_above_mast_datum": {
+      "value": 7.011,
+      "kind": "rule limit",
+      "rule": "7.2.3"
+    },
+    "maximum_boom_overall_length_m": {
+      "value": 3.308,
+      "kind": "rule limit",
+      "rule": "7.3.4"
+    },
+    "maximum_sail_measurements_m": {
+      "mainsail_leech": 6.96,
+      "headsail_luff": 4.51,
+      "headsail_foot": 2.287,
+      "headsail_leech": 4.0,
+      "spinnaker_leech": 6.0,
+      "spinnaker_foot_median": 7.096,
+      "spinnaker_foot": 4.5,
+      "spinnaker_half_width": 4.5
+    },
+    "target_hull_lines_or_offsets": null,
+    "target_hull_hydrostatic_righting_arm_curve": null,
+    "crew_mass_and_lever_arms": null,
+    "all_up_displacement_kg": null,
+    "sail_force_coefficients": null,
+    "hull_and_foil_resistance_curves": null
+  }
+}

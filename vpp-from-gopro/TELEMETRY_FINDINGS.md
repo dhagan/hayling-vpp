@@ -31,6 +31,23 @@ the repeated GPS5 records between consecutive GPSU timestamps; this
 sub-second alignment should be verified before high-precision timing use.
 `GPSP` is retained as a raw value and is not assigned an undocumented unit.
 
+## Extracted track summaries
+
+The script has now extracted both readable clips. Fix status `3` is present in
+the valid points; `GPSF=0` points from the beginning of `GX010922.MP4` are kept
+in the CSV with no estimated timestamp and are excluded from the GPX route.
+
+| File | GPS blocks / points | Valid fixes | Estimated UTC range | GPS 2D speed, median / p90 / max |
+|---|---:|---:|---|---:|
+| `GX010922.MP4` | 710 / 7,106 | 7,046 (`GPSF=3`); 60 no-fix | 2024-12-14 17:37:49.429–17:49:33.999 | 3.015 / 3.672 / 4.789 m/s |
+| `GX030922.MP4` | 709 / 7,097 | 7,097 (`GPSF=3`) | 2024-12-14 18:01:24.799–18:13:14.399 | 3.454 / 4.018 / 4.929 m/s |
+
+These are GPS-reported speeds over ground, not water-relative 505 boat speed.
+The approximately twelve-minute gap between these files is not filled or
+interpolated. The date/time and sub-second positions are estimates based on
+GPSU packet times; the CSV also preserves those packet times and each fix's
+index within its block.
+
 ## Suitability for 505 VPP polars
 
 These tracks can provide a useful **position and ground-speed data layer**.

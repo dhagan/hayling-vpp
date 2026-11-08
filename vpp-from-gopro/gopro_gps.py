@@ -44,7 +44,7 @@ class GpsBlock:
 
 @dataclass(frozen=True)
 class GpsPoint:
-    timestamp_utc: datetime
+    timestamp_utc: Optional[datetime]
     gpsu_utc: datetime
     block_index: int
     sample_in_block: int
@@ -370,27 +370,38 @@ def extract_gps(mp4_path: Path) -> Tuple[List[GpsBlock], Optional[str], int]:
 def expand_gps_blocks(blocks: Sequence[GpsBlock]) -> List[GpsPoint]:
     if not blocks:
         return []
-    ordered = sorted(blocks, key=lambda block: block.gpsu_utc)
+    valid_indices = [
+        index for index, block in enumerate(blocks) if block.fix is not None and block.fix > 0
+    ]
     deltas = [
-        (b.gpsu_utc - a.gpsu_utc).total_seconds()
-        for a, b in zip(ordered, ordered[1:])
-        if 0 < (b.gpsu_utc - a.gpsu_utc).total_seconds() <= 5
+        (blocks[b].gpsu_utc - blocks[a].gpsu_utc).total_seconds()
+        for a, b in zip(valid_indices, valid_indices[1:])
+        if 0 < (blocks[b].gpsu_utc - blocks[a].gpsu_utc).total_seconds() <= 5
     ]
     fallback_delta = statistics.median(deltas) if deltas else 1.0
-    result: List[GpsPoint] = []
-    for block_index, block in enumerate(ordered):
-        if block_index + 1 < len(ordered):
-            next_block = ordered[block_index + 1]
-            interval = (next_block.gpsu_utc - block.gpsu_utc).total_seconds()
+    intervals: Dict[int, float] = {}
+    for position, block_index in enumerate(valid_indices):
+        if position + 1 < len(valid_indices):
+            next_index = valid_indices[position + 1]
+            interval = (
+                blocks[next_index].gpsu_utc - blocks[block_index].gpsu_utc
+            ).total_seconds()
             if interval <= 0 or interval > 5:
                 interval = fallback_delta
         else:
             interval = fallback_delta
+        intervals[block_index] = interval
+
+    result: List[GpsPoint] = []
+    for block_index, block in enumerate(blocks):
+        interval = intervals.get(block_index)
         count = len(block.gps_points)
         for sample_index, values in enumerate(block.gps_points):
             latitude, longitude, altitude, speed_2d, speed_3d = values
-            timestamp = block.gpsu_utc + timedelta(
-                seconds=interval * sample_index / count
+            timestamp = (
+                block.gpsu_utc + timedelta(seconds=interval * sample_index / count)
+                if interval is not None
+                else None
             )
             result.append(
                 GpsPoint(
@@ -428,14 +439,19 @@ def _summary(
     blocks: Sequence[GpsBlock],
     points: Sequence[GpsPoint],
 ) -> Dict[str, object]:
-    speeds_2d = [point.speed_2d_m_s for point in points]
-    speeds_3d = [point.speed_3d_m_s for point in points]
+    valid_points = [
+        point
+        for point in points
+        if point.timestamp_utc is not None and point.fix is not None and point.fix > 0
+    ]
+    speeds_2d = [point.speed_2d_m_s for point in valid_points]
+    speeds_3d = [point.speed_3d_m_s for point in valid_points]
     fixes: Dict[str, int] = {}
     for point in points:
         key = str(point.fix) if point.fix is not None else "missing"
         fixes[key] = fixes.get(key, 0) + 1
-    start = min((point.timestamp_utc for point in points), default=None)
-    end = max((point.timestamp_utc for point in points), default=None)
+    start = min((point.timestamp_utc for point in valid_points), default=None)
+    end = max((point.timestamp_utc for point in valid_points), default=None)
 
     def speed_stats(values: Sequence[float]) -> Dict[str, Optional[float]]:
         return {
@@ -451,6 +467,8 @@ def _summary(
         "gpmf_samples": sample_count,
         "gps_blocks": len(blocks),
         "gps_points": len(points),
+        "gps_points_with_fix": len(valid_points),
+        "gps_points_without_fix": len(points) - len(valid_points),
         "start_utc_estimated": start.isoformat().replace("+00:00", "Z")
         if start
         else None,
@@ -459,22 +477,29 @@ def _summary(
         else None,
         "gps_fix_counts": fixes,
         "gps_precision_raw_range": [
-            min((p.precision_raw for p in points if p.precision_raw is not None), default=None),
-            max((p.precision_raw for p in points if p.precision_raw is not None), default=None),
+            min(
+                (p.precision_raw for p in valid_points if p.precision_raw is not None),
+                default=None,
+            ),
+            max(
+                (p.precision_raw for p in valid_points if p.precision_raw is not None),
+                default=None,
+            ),
         ],
         "latitude_range": [
-            min((p.latitude for p in points), default=None),
-            max((p.latitude for p in points), default=None),
+            min((p.latitude for p in valid_points), default=None),
+            max((p.latitude for p in valid_points), default=None),
         ],
         "longitude_range": [
-            min((p.longitude for p in points), default=None),
-            max((p.longitude for p in points), default=None),
+            min((p.longitude for p in valid_points), default=None),
+            max((p.longitude for p in valid_points), default=None),
         ],
         "gps_speed_2d": speed_stats(speeds_2d),
         "gps_speed_3d": speed_stats(speeds_3d),
         "timing_note": (
-            "Sub-sample timestamps are estimated by evenly spacing GPS5 fixes "
-            "between successive GPSU packet timestamps."
+            "Sub-sample timestamps for blocks with a GPS fix are estimated by "
+            "spacing GPS5 fixes between successive GPSU timestamps. Rows without "
+            "a GPS fix have no estimated timestamp."
         ),
         "vpp_note": (
             "GPS speed is ground-relative, not boat speed through water. "
@@ -505,7 +530,9 @@ def _write_csv(path: Path, points: Sequence[GpsPoint]) -> None:
                 {
                     "timestamp_utc_estimated": point.timestamp_utc.isoformat().replace(
                         "+00:00", "Z"
-                    ),
+                    )
+                    if point.timestamp_utc
+                    else "",
                     "gpsu_block_utc": point.gpsu_utc.isoformat().replace(
                         "+00:00", "Z"
                     ),
@@ -533,6 +560,8 @@ def _write_gpx(path: Path, points: Sequence[GpsPoint], name: str) -> None:
     ET.SubElement(track, qname("name")).text = name
     segment = ET.SubElement(track, qname("trkseg"))
     for point in points:
+        if point.timestamp_utc is None or point.fix is None or point.fix <= 0:
+            continue
         node = ET.SubElement(
             segment,
             qname("trkpt"),
