@@ -31,6 +31,10 @@ This is a solver outline, not yet a complete calibrated VPP. The available
 class limits do not define full sail shapes, force coefficients, hull
 resistance, hydrostatics, or a particular crew configuration.
 
+See [`EQUATIONS_AND_SOLVER.md`](EQUATIONS_AND_SOLVER.md) for coordinate and
+wind conventions, explicit force/moment equations, solver checks, and a
+review of the unsupported numerical claims in the earlier draft.
+
 ## Righting moment
 
 There is no single class-wide righting-moment constant. For an upright,

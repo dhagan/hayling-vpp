@@ -1,7 +1,18 @@
 {
   "class": "International 505",
-  "source_note": "Values are from the International 505 Association hosted 505 Measurement Rules PDF. Its PDF metadata identifies a 2014 rules document; confirm the latest amendments before final use.",
-  "source_url": "https://int505.org/wp-content/uploads/2019/02/505MeasurementRules.pdf",
+  "source_note": "Textual rule limits were cross-checked against the official-hosted 2024 Class Rules PDF (PDF metadata creation date 2024-09-08). The class-rules index still links an older 2014 PDF; check for later amendments before compliance use. Hull-template station values are from the hosted measurement form and are not a complete hull offsets table.",
+  "source_url": "https://www.int505.org/wp-content/uploads/2024/09/Class-Rules.pdf",
+  "legacy_source_url": "https://int505.org/wp-content/uploads/2019/02/505MeasurementRules.pdf",
+  "accessed_on": "2026-11-08",
+  "official_rule_pages": {
+    "class_rules_index": "https://int505.org/about-the-505/resources-for-sailors/class-rules/",
+    "hull_measurements": "https://int505.org/about-the-505/resources-for-sailors/class-rules/hull-measurements/",
+    "sailing_weight": "https://int505.org/about-the-505/resources-for-sailors/class-rules/sailing-weight/",
+    "mast_measurements": "https://int505.org/about-the-505/resources-for-sailors/class-rules/mast-measurements/",
+    "boom_measurements": "https://int505.org/about-the-505/resources-for-sailors/class-rules/boom-measurements/",
+    "sails": "https://int505.org/about-the-505/resources-for-sailors/class-rules/sails/",
+    "foils": "https://int505.org/about-the-505/resources-for-sailors/class-rules/foils/"
+  },
   "parameters": {
     "overall_length_m": {
       "value": 5.05,
@@ -31,25 +42,84 @@
       "kind": "rule limit",
       "rule": "6.2"
     },
+    "mast_position_range_m_forward_of_station_11": {
+      "minimum": 3.048,
+      "maximum": 3.202,
+      "kind": "rule range",
+      "rule": "7.2.1"
+    },
+    "mast_spar_max_cross_section_m": {
+      "value": 0.102,
+      "kind": "rule limit",
+      "rule": "7.2.1"
+    },
+    "mast_max_curvature_m": {
+      "value": 0.030,
+      "kind": "rule limit",
+      "rule": "7.2.2"
+    },
     "maximum_mast_top_height_m_above_mast_datum": {
       "value": 7.011,
       "kind": "rule limit",
       "rule": "7.2.3"
+    },
+    "maximum_upper_mast_limit_mark_height_m_above_mast_datum": {
+      "value": 6.858,
+      "kind": "rule limit",
+      "rule": "7.2.3"
+    },
+    "spinnaker_hoist_height_range_m_above_mast_datum": {
+      "minimum": 5.054,
+      "maximum": 5.955,
+      "kind": "rule range",
+      "rule": "7.2.4"
+    },
+    "headsail_halyard_entry_height_range_m_above_mast_datum": {
+      "minimum": 4.648,
+      "maximum": 4.750,
+      "kind": "rule range",
+      "rule": "7.2.5"
+    },
+    "boom_spar_max_cross_section_m": {
+      "value": 0.102,
+      "kind": "rule limit",
+      "rule": "7.3.1"
+    },
+    "boom_max_curvature_m": {
+      "value": 0.025,
+      "kind": "rule limit",
+      "rule": "7.3.2"
     },
     "maximum_boom_overall_length_m": {
       "value": 3.308,
       "kind": "rule limit",
       "rule": "7.3.4"
     },
+    "maximum_boom_outer_point_distance_m": {
+      "value": 2.858,
+      "kind": "rule limit",
+      "rule": "7.3.3"
+    },
     "maximum_sail_measurements_m": {
       "mainsail_leech": 6.96,
+      "mainsail_top_width": 0.127,
+      "mainsail_upper_leech_width": 0.270,
+      "mainsail_upper_leech_point_from_head": 0.325,
+      "mainsail_three_quarter_width": 1.120,
+      "mainsail_half_width": 1.950,
       "headsail_luff": 4.51,
       "headsail_foot": 2.287,
       "headsail_leech": 4.0,
+      "headsail_top_width": 0.040,
       "spinnaker_leech": 6.0,
       "spinnaker_foot_median": 7.096,
       "spinnaker_foot": 4.5,
       "spinnaker_half_width": 4.5
+    },
+    "maximum_spinnaker_pole_length_m": {
+      "value": 2.516,
+      "kind": "rule limit",
+      "rule": "7.4.1"
     },
     "target_hull_lines_or_offsets": null,
     "target_hull_hydrostatic_righting_arm_curve": null,

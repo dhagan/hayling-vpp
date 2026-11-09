@@ -1,5 +1,14 @@
 # International 505 Dinghy: Polar Data and VPP Modeling
 
+> **Status notice (2026-11-08):** This is a historical, unverified draft—not
+> a valid 505 polar or a reproducible VPP result. The claimed target-speed
+> source has no recoverable primary citation in this project, and the draft
+> does not provide the coefficients, boat geometry, solver, or validation
+> needed to substantiate its synthetic tables and uncertainty claims. Do not
+> use its numeric polar values as tuning targets. The equation framework and
+> correction record are now maintained in
+> [`vpp-theoretical/EQUATIONS_AND_SOLVER.md`](vpp-theoretical/EQUATIONS_AND_SOLVER.md).
+
 **Executive Summary:** We sought published polar (velocity prediction) data for the International 505 dinghy from primary sources (class associations, sailing federations, sailmakers, technical papers) and found none publicly available.  The only numeric data resembling 505 polars were informal “target speed” tables (e.g. a South African Sailing table indicating boat speeds at 6–22 kt true wind) and anecdotal reports.  In lieu of published polars, we compiled a provisional database from available snippets and comparable high-performance dinghies, then developed a physics-based VPP model to generate synthetic polar curves.  Our recommended polar tables (knots) for a “typical” 505 rig (single trapeze, large spinnaker) are given below for several wind speeds.  Alternate polar curves are presented for lighter vs heavier crews.  Figures show example polar and VMG curves (for illustration).  Detailed methodology, data provenance, and assumptions are provided, with any estimated values clearly noted.  Downloadable CSV tables are included at the end.
 
 **505 Dinghy Overview:** The International 5O5 is a two-person, high-performance planing monohull dinghy (LOA 5.05 m, beam 1.88 m, hull weight ~127 kg) with trapeze and symmetric spinnaker.  It planes upwind in ≳10 kt winds.  Upwind sail area is 17.3 m² (mainsail+gennaker), with a spinnaker about 44.3 m².  The 505’s planing hull and powerful sailplan imply high speeds (up to ~7–8 kt boat speed in 20+ kt wind).  Since class rules tightly control hull shape but allow many sail/foil/rig configurations, actual performance varies with crew weight, sail trim and tuning. 

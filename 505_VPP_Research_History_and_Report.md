@@ -369,6 +369,17 @@ The research established a useful starting point, but not a finished 505 VPP.
 
 **The preliminary numbers should not be used as authoritative tuning targets.** The strongest path forward is to verify the class-rule inputs, obtain event tracking exports and matching wind data, and build a reproducible model that clearly separates observed performance from synthetic predictions.
 
+## 11. Current two-path plan and workstream status (2026-11-08)
+
+The current execution plan is recorded in [`POLAR_GENERATION_PLAN.md`](POLAR_GENERATION_PLAN.md):
+
+1. **Empirical evidence:** analyze the GPX and GoPro tracks, then seek synchronized wind, heading, and current. Use 470/49er data only as traceable priors or bounds—not as 505 measurements.
+2. **505-specific theoretical VPP:** assemble class-rule and boat-specific inputs, solve force balance, then calibrate and validate against independent 505 observations.
+
+Work is organized in [`vpp-from-gpx`](vpp-from-gpx/), [`vpp-from-gopro`](vpp-from-gopro/), [`vpp-from-470-49er`](vpp-from-470-49er/), and [`vpp-theoretical`](vpp-theoretical/), each with its own work record. The theoretical directory now contains a sourced rule-parameter scaffold, model specification, and a crew-only righting-moment calculator; it does **not** yet contain a numerical VPP. The public [Hull Measurements rules page](https://int505.org/about-the-505/resources-for-sailors/class-rules/hull-measurements/) confirms that a compliant hull must match designer drawings and offsets, but its class measurement controls are not a complete target-boat lines plan. Actual hull geometry, hydrostatics, all-up mass/CG, sail outlines, and force coefficients remain prerequisites.
+
+The existing GPX and GoPro speeds are ground-relative observations, not true-wind 505 polars. Keep them separate from any future model output, and do not use the report's preliminary synthetic grid as a tuning target.
+
 ---
 
 ## Appendix A — Original request wording preserved where available

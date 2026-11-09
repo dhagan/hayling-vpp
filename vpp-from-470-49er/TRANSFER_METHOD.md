@@ -2,7 +2,7 @@
 
 ## Candidate data
 
-For each 470 or 49er data source, record:
+For each FD, 470, or 49er data source, record:
 
 - URL, author/organization, publication date, and whether values are measured,
   modeled, or target polars.
@@ -21,9 +21,11 @@ be traced to a credible publisher.
 3. Use dimensionless or normalized comparisons only after documenting the
    scaling assumptions; sail area, crew righting moment, displacement, hull
    resistance, and planing behavior do not scale as one simple multiplier.
-4. Treat the 470 and 49er values as separate lower/upper context only where
-   their verified characteristics justify that interpretation. Do not assume
-   either boat bounds the 505 in every condition.
+4. Treat FD, 470, and 49er values as separate context only where their
+   verified characteristics justify that interpretation. Do not assume any
+   one boat bounds the 505 in every condition. FD's larger displacement and
+   different hull/rig configuration are particularly important when judging
+   similarity to the 505.
 5. Keep transferred values outside the measured-505 dataset and label them as
    priors until a 505 test supports them.
 

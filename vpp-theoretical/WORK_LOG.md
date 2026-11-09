@@ -20,14 +20,37 @@ crew righting moment, and a target hull definition.
   unsupported crew-weight or trapeze-position assumptions.
 - Defined the analytical force-balance model and release gates in
   `MODEL_SPEC.md`.
+- Added `EQUATIONS_AND_SOLVER.md` with explicit reference frames,
+  apparent-wind treatment, aerodynamic and hydrodynamic load forms,
+  force/moment balance, righting-moment conventions, VMG definitions, and
+  solver checks.
+- Reviewed `chatgptwithequations.md`: its unverified target-speed table,
+  synthetic polar, stated uncertainty, and claimed validation are not
+  reproducible. Added a warning and linked it to the equation framework rather
+  than carrying its numbers into the theoretical model.
+
+## Follow-up: rule-backed rig and sail constraints
+
+- Located an official-domain 2024 Class Rules PDF (PDF metadata creation date
+  2024-09-08) and cross-checked textual rule limits in the parameter register
+  against its clauses. Hull-template values remain separately attributed to
+  the hosted measurement form.
+- Recorded that the Association's class-rules index still links a 2014 PDF;
+  no later amendment or confirmation of the latest consolidated edition was
+  found. The register therefore remains subject to class/measurement-officer
+  confirmation.
+- Expanded `parameters.json` and `PARAMETERS.md` with rule-based sail widths,
+  mast/boom limits, halyard/hoist ranges, and spinnaker-pole length. These are
+  constraints only; they do not supply the target sails' actual shapes, areas,
+  mast bend, or aerodynamic coefficients.
 
 ## Current limitation
 
 This is an input/model scaffold, not a numerical VPP. The target hull lines,
 hydrostatics, actual sail outlines, all-up mass/CG, crew positions, and
-aerodynamic/hydrodynamic coefficients remain unprovided. The hosted PDF also
-identifies itself as a 2014 rules document, so current amendments need to be
-checked.
+aerodynamic/hydrodynamic coefficients remain unprovided. The hosted
+measurement form is not a full target-hull lines plan; current class amendments
+also need confirmation.
 
 ## Next steps
 
